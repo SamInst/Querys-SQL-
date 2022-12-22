@@ -1,0 +1,148 @@
+select * from professor_disciplina WHERE ano LIKE '2018';
+
+INSERT INTO aluno VALUES (1, ' Tiago Mateus Junior', '210', 'Palmas');
+insert into aluno (aluno_numero, aluno_nome, aluno_rua, aluno_cidade) VALUES ;
+INSERT INTO aluno VALUES (2, 'Luciana Gomes', '202', 'Palmas');
+INSERT INTO aluno VALUES (3, 'João Mateus', '2300', 'Gurupi');
+INSERT INTO aluno VALUES (4, 'José Silva', '1024', 'Paraíso');
+INSERT INTO aluno VALUES (5, 'Juraci', '106', 'Miranorte');
+INSERT INTO aluno VALUES (6, 'Paulo', '101', 'Goianorte');
+INSERT INTO aluno VALUES (7, 'Adriana Calcanhoto', 'rua Alvorada', 'Paraíso');
+INSERT INTO aluno VALUES (8, 'Rosane', 'rua das flores', 'Guaraí');
+INSERT INTO aluno VALUES (9, 'Mara', 'rua das águas', 'Porto Nacional');
+INSERT INTO aluno VALUES (10, 'Julia', 'rua de madeira', 'Paraíso');
+INSERT INTO aluno VALUES (11, 'Julia', 'rua de madeira', 'Palmas');
+
+INSERT INTO professor VALUES (1, 'João José', '103', 'Palmas');
+INSERT INTO professor VALUES (2, 'Maria José', '201', 'Palmas');
+INSERT INTO professor VALUES (3, 'Bruno', '305', 'Paraiso');
+INSERT INTO professor VALUES (4, 'José Ricardo', '1106', 'Porto Nacional');
+INSERT INTO professor VALUES (5, 'Manuela', '120', 'Araguaína');
+INSERT INTO professor VALUES (6, 'Bruno', '1003', 'Porto Nacional');
+INSERT INTO professor VALUES (7, 'Luciana', ' 100', 'Miracema');
+INSERT INTO professor VALUES (8, 'Paulo', ' 150', 'Palmas');
+INSERT INTO professor VALUES (9, 'Lual', '1006', 'Paraíso');
+INSERT INTO professor VALUES (10, 'Antonio Marcos', '170', 'Araguaína');
+
+
+INSERT INTO disciplina (disc_codigo, disc_nome, curso_nome, qtd_aulas) VALUES (1, ' Química', 'Ensino Médio', 4);
+INSERT INTO disciplina (disc_codigo, disc_nome, curso_nome, qtd_aulas) VALUES (2, ' Biologia', 'Ensino Médio', 4);
+INSERT INTO disciplina (disc_codigo, disc_nome, curso_nome, qtd_aulas) VALUES (3, 'História', 'Ensino Médio', 2);
+INSERT INTO disciplina (disc_codigo, disc_nome, curso_nome, qtd_aulas) VALUES (4, ' Religião', 'Ensino Médio', 2);
+INSERT INTO disciplina (disc_codigo, disc_nome, curso_nome, qtd_aulas) VALUES (5, ' Português', 'Ensino Pós Médio', 4);
+INSERT INTO disciplina (disc_codigo, disc_nome, curso_nome, qtd_aulas) VALUES (6, 'Física', 'Ensino Pós Médio', 6);
+INSERT INTO disciplina (disc_codigo, disc_nome, curso_nome, qtd_aulas) VALUES (7, 'Matemática', 'Ensino Pós Médio', 4);
+INSERT INTO disciplina (disc_codigo, disc_nome, curso_nome, qtd_aulas) VALUES (8, 'Geografia ', 'Ensino Pós Médio', 2);
+INSERT INTO disciplina (disc_codigo, disc_nome, curso_nome, qtd_aulas) VALUES (9, 'Informática Aplicada', 'CST Sistemas para Internet', 4);
+INSERT INTO disciplina (disc_codigo, disc_nome, curso_nome, qtd_aulas) VALUES (10, 'Banco de dados', 'CST Sistemas para Internet', 4);
+INSERT INTO disciplina (disc_codigo, disc_nome, curso_nome, qtd_aulas) VALUES (11, 'Programação de Banco de dados', 'Computação', 4);
+
+
+INSERT INTO matricula (aluno_numero, disc_codigo, ano) VALUES (1, 10, '2018');
+INSERT INTO matricula (aluno_numero, disc_codigo, ano) VALUES (1, 4, '2018');
+INSERT INTO matricula (aluno_numero, disc_codigo, ano) VALUES (1, 6, '2018');
+INSERT INTO matricula (aluno_numero, disc_codigo, ano) VALUES (5, 3, '2018');
+INSERT INTO matricula (aluno_numero, disc_codigo, ano) VALUES (6, 1, '2018');
+INSERT INTO matricula (aluno_numero, disc_codigo, ano) VALUES (2, 6, '2018');
+INSERT INTO matricula (aluno_numero, disc_codigo, ano) VALUES (7, 9, '2018');
+INSERT INTO matricula (aluno_numero, disc_codigo, ano) VALUES (8, 10, '2018');
+INSERT INTO matricula (aluno_numero, disc_codigo, ano) VALUES (9, 1, '2018');
+INSERT INTO matricula (aluno_numero, disc_codigo, ano) VALUES (2, 2, '2018');
+INSERT INTO matricula (aluno_numero, disc_codigo, ano) VALUES (11, 11, '2018');
+
+INSERT INTO professor_disciplina (disc_codigo, prof_numero, ano) VALUES (1, 10, '2018');
+INSERT INTO professor_disciplina (disc_codigo, prof_numero, ano) VALUES (2, 5, '2018');
+INSERT INTO professor_disciplina (disc_codigo, prof_numero, ano) VALUES (3, 7, '2018');
+INSERT INTO professor_disciplina (disc_codigo, prof_numero, ano) VALUES (4, 4, '2018');
+INSERT INTO professor_disciplina (disc_codigo, prof_numero, ano) VALUES (5, 9, '2018');
+INSERT INTO professor_disciplina (disc_codigo, prof_numero, ano) VALUES (6, 2, '2018');
+INSERT INTO professor_disciplina (disc_codigo, prof_numero, ano) VALUES (7, 3, '2018');
+INSERT INTO professor_disciplina (disc_codigo, prof_numero, ano) VALUES (8, 9, '2018');
+INSERT INTO professor_disciplina (disc_codigo, prof_numero, ano) VALUES (9, 6, '2018');
+INSERT INTO professor_disciplina (disc_codigo, prof_numero, ano) VALUES (10, 3, '2018');
+INSERT INTO professor_disciplina (disc_codigo, prof_numero, ano) VALUES (11, 5, '2018');
+
+
+-- 	Query 1:
+select d.disc_nome, pd.ano, pf.prof_nome, pf.prof_cidade, d.curso_nome
+from disciplina d
+         INNER Join professor_disciplina pd ON pd.disc_codigo = d.disc_codigo
+         INNER JOIN professor pf ON pf.prof_numero = pd.prof_numero
+where pd.ano like '2018';
+
+-- 	Resolução
+SELECT disciplina.disc_codigo,
+       disciplina.disc_nome,
+       professor.prof_nome,
+       professor.prof_cidade,
+       disciplina.curso_nome,
+       matricula.ano
+FROM disciplina,
+     professor,
+     matricula,
+     aluno,
+     professor_disciplina
+WHERE disciplina.disc_codigo = matricula.disc_codigo
+  AND aluno.aluno_numero = matricula.aluno_numero
+  AND professor.prof_numero = professor_disciplina.prof_numero
+  AND disciplina.disc_codigo = professor_disciplina.disc_codigo
+  AND professor_disciplina.ano = matricula.ano
+  AND matricula.ano = '2018';
+
+
+-- 	Query 2:
+select pf.prof_nome, d.curso_nome, pd.ano, d.disc_nome
+from disciplina d
+         INNER Join professor_disciplina pd ON pd.disc_codigo = d.disc_codigo
+         INNER JOIN professor pf ON pf.prof_numero = pd.prof_numero
+where pd.ano like '2018'
+  and d.curso_nome like 'CST Sistemas para Internet';
+
+
+-- 	Query 3:
+select al.aluno_nome, d.disc_nome, al.aluno_cidade, d.curso_nome
+from matricula mt
+         INNER JOIN aluno al ON al.aluno_numero = mt.aluno_numero
+         INNER JOIN disciplina d ON d.disc_codigo = mt.disc_codigo
+where mt.ano like '2018';
+
+
+-- 	Query 4:
+select al.aluno_nome, al.aluno_cidade, d.disc_nome, mt.ano
+from matricula mt
+         INNER JOIN aluno al ON al.aluno_numero = mt.aluno_numero
+         INNER JOIN disciplina d ON d.disc_codigo = mt.disc_codigo
+WHERE d.disc_nome like 'Programação de Banco de dados'
+  and al.aluno_cidade like 'Palmas'
+  and mt.ano like '2018';
+
+
+-- 	Query 5:
+SELECT pf.prof_nome, pf.prof_cidade, d.curso_nome
+from professor_disciplina pd
+         INNER JOIN disciplina d ON d.disc_codigo = pd.disc_codigo
+         INNER JOIN professor pf ON pf.prof_numero = pd.prof_numero
+WHERE d.curso_nome like 'CST Sistemas para Internet'
+  and pf.prof_cidade <> 'Palmas';
+
+
+-- -- 	Query 6:
+-- SELECT pf.prof_nome, AVG(d.qtd_aulas)
+-- from professor_disciplina pd
+--          INNER JOIN disciplina d ON d.disc_codigo = pd.disc_codigo
+--          INNER JOIN professor pf ON pf.prof_numero = pd.prof_numero;
+-- WHERE d.qtd_aulas;
+
+
+-- 	Query 7:
+SELECT pf.prof_nome, d.qtd_aulas, d.curso_nome
+from professor_disciplina pd
+         INNER JOIN disciplina d ON d.disc_codigo = pd.disc_codigo
+         INNER JOIN professor pf ON pf.prof_numero = pd.prof_numero;
+
+--Query 8
+select al.aluno_nome, d.curso_nome, d.disc_codigo, d.disc_nome, mt.ano
+from matricula mt
+         INNER JOIN aluno al ON al.aluno_numero = mt.aluno_numero
+         INNER JOIN disciplina d ON d.disc_codigo = mt.disc_codigo
+WHERE mt.ano like '2018';
